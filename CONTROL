@@ -1,0 +1,3 @@
+Source: bcrypt
+Version: 1.3.0
+Description: Wrapper library for BCrypt.

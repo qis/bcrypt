@@ -27,9 +27,8 @@ std::string hash(const std::string& pass, unsigned long rounds) {
   // Generate random bytes.
   std::array<char, salt_size + 1> rand;
   static thread_local std::random_device rd;
-  static thread_local std::uniform_int_distribution<int> dist(
-    std::numeric_limits<char>::min(), std::numeric_limits<char>::max());
-  for (auto& c : rand) {
+  static thread_local std::uniform_int_distribution<int> dist(std::numeric_limits<char>::min(), std::numeric_limits<char>::max());
+  for (auto c : rand) {
     c = static_cast<char>(dist(rd));
   }
 
@@ -52,7 +51,7 @@ std::string hash(const std::string& pass, unsigned long rounds) {
 bool verify(const std::string& pass, const std::string& hash) noexcept {
   // Generate hash.
   std::array<char, hash_size + 1> test;
-  if (!_crypt_blowfish_rn(pass.data(), hash.data(), &test[0], hash_size + 1)) {
+  if (!_crypt_blowfish_rn(pass.data(), hash.data(), test.data(), hash_size + 1)) {
     return false;
   }
 

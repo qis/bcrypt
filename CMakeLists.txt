@@ -10,13 +10,13 @@ target_include_directories(bcrypt PRIVATE src PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")
-install(TARGETS bcrypt EXPORT bcrypt LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
-install(EXPORT bcrypt FILE bcrypt-config.cmake NAMESPACE bcrypt:: DESTINATION lib/cmake/bcrypt)
-
 if(WIN32)
   target_compile_definitions(bcrypt PRIVATE _UNICODE UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
 endif()
+
+install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")
+install(TARGETS bcrypt EXPORT bcrypt LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+install(EXPORT bcrypt FILE bcrypt-config.cmake NAMESPACE bcrypt:: DESTINATION lib/cmake/bcrypt)
 
 include(CMakePackageConfigHelpers)
 

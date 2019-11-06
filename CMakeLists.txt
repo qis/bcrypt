@@ -14,6 +14,10 @@ install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")
 install(TARGETS bcrypt EXPORT bcrypt LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 install(EXPORT bcrypt FILE bcrypt-config.cmake NAMESPACE bcrypt:: DESTINATION lib/cmake/bcrypt)
 
+if(WIN32)
+  target_compile_definitions(bcrypt PRIVATE _UNICODE UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
+endif()
+
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/bcrypt-config-version.cmake
   VERSION ${PROJECT_VERSION} COMPATIBILITY SameMajorVersion)

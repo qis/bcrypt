@@ -23,18 +23,21 @@ constexpr int hash_size = part_info_size + part_salt_size + part_hash_size;
 
 }  // namespace
 
-std::string hash(const std::string& pass, unsigned long rounds) {
+std::string hash(const std::string& pass, unsigned long rounds)
+{
   // Generate random bytes.
   std::array<char, salt_size + 1> rand;
   static thread_local std::random_device rd;
-  static thread_local std::uniform_int_distribution<int> dist(std::numeric_limits<char>::min(), std::numeric_limits<char>::max());
+  static thread_local std::uniform_int_distribution<int> dist(
+    std::numeric_limits<char>::min(), std::numeric_limits<char>::max());
   for (auto c : rand) {
     c = static_cast<char>(dist(rd));
   }
 
   // Generate salt.
   std::array<char, salt_size + 1> salt;
-  if (!_crypt_gensalt_blowfish_rn("$2b$", rounds, rand.data(), salt_size + 1, &salt[0], salt_size + 1)) {
+  if (!_crypt_gensalt_blowfish_rn("$2b$", rounds, rand.data(), salt_size + 1, &salt[0], salt_size + 1))
+  {
     throw std::runtime_error("password salt error");
   }
 
@@ -48,7 +51,8 @@ std::string hash(const std::string& pass, unsigned long rounds) {
   return hash;
 }
 
-bool verify(const std::string& pass, const std::string& hash) noexcept {
+bool verify(const std::string& pass, const std::string& hash) noexcept
+{
   // Generate hash.
   std::array<char, hash_size + 1> test;
   if (!_crypt_blowfish_rn(pass.data(), hash.data(), test.data(), hash_size + 1)) {

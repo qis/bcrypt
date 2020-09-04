@@ -43,6 +43,7 @@
  * hadn't seen his code).
  */
 
+// clang-format off
 #include <string.h>
 
 #include <errno.h>
@@ -905,3 +906,4 @@ char *_crypt_gensalt_blowfish_rn(const char *prefix, unsigned long count,
 
 	return output;
 }
+// clang-format on

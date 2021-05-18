@@ -30,8 +30,8 @@ std::string hash(const std::string& pass, unsigned long rounds)
   static thread_local std::random_device rd;
   static thread_local std::uniform_int_distribution<int> dist(
     std::numeric_limits<char>::min(), std::numeric_limits<char>::max());
-  for (auto c : rand) {
-    c = static_cast<char>(dist(rd));
+  for (size_t i = 0; i < salt_size + 1; i++) {
+    rand[i] = dist(rd);
   }
 
   // Generate salt.
